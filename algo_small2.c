@@ -6,12 +6,11 @@
 /*   By: ikhelil <ikhelil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:08:33 by ikhelil           #+#    #+#             */
-/*   Updated: 2025/04/13 13:03:17 by ikhelil          ###   ########.fr       */
+/*   Updated: 2025/05/20 14:30:07 by ikhelil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack.h"
-
 
 void	sort_four(t_stack *a, t_stack *b)
 {

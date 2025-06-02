@@ -6,7 +6,7 @@
 /*   By: ikhelil <ikhelil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 16:20:57 by ikhelil           #+#    #+#             */
-/*   Updated: 2025/04/13 12:59:00 by ikhelil          ###   ########.fr       */
+/*   Updated: 2025/05/25 11:01:26 by ikhelil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,26 +35,6 @@ int	is_number(const char *str)
 	return (1);
 }
 
-/*static long	extract_number(const char *str, int *valid)
-{
-	int		i;
-	long	res;
-
-	i = 0;
-	res = 0;
-	while (str[i])
-	{
-		if (str[i] < '0' || str[i] > '9')
-		{
-			*valid = 0;
-			return (0);
-		}
-		res = res * 10 + (str[i] - '0');
-		i++;
-	}
-	return (res);
-}*/
-
 int	ft_atoi_secure(const char *str, int *out)
 {
 	long	res;
@@ -62,7 +42,6 @@ int	ft_atoi_secure(const char *str, int *out)
 
 	res = 0;
 	sign = 1;
-
 	if (*str == '-' || *str == '+')
 	{
 		if (*str == '-')
@@ -83,7 +62,6 @@ int	ft_atoi_secure(const char *str, int *out)
 	*out = (int)(res * sign);
 	return (1);
 }
-
 
 int	has_duplicates(t_stack *stack)
 {

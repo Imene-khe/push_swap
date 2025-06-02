@@ -15,7 +15,7 @@ SRCS = push_swap.c \
 		algo_small.c \
 		algo_small2.c \
 		sorting.c \
-		test.c \
+		sorting2.c \
 		main.c \
 
 OBJS = $(SRCS:.c=.o)
@@ -32,3 +32,5 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+.PHONY: all clean fclean re
+

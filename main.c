@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikhelil <ikhelil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 08:12:44 by ikhelil           #+#    #+#             */
-/*   Updated: 2025/04/13 14:08:55 by ikhelil          ###   ########.fr       */
+/*   Updated: 2025/05/24 15:58:33 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ int	main(int argc, char **argv)
 {
 	t_stack	*a;
 	t_stack	*b;
+	int		total;
 
 	if (argc < 2)
 		return (0);
-	a = init_stack(argc - 1);
-	b = init_stack(argc - 1);
+	total = count_total_numbers(argc, argv);
+	a = init_stack(total);
+	b = init_stack(total);
 	if (!a || !b)
 		return (1);
 	parse_args(argc, argv, a);
@@ -29,4 +31,3 @@ int	main(int argc, char **argv)
 	free_stack(b);
 	return (0);
 }
-

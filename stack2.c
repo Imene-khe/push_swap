@@ -6,7 +6,7 @@
 /*   By: ikhelil <ikhelil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 17:14:03 by ikhelil           #+#    #+#             */
-/*   Updated: 2025/04/12 23:47:55 by ikhelil          ###   ########.fr       */
+/*   Updated: 2025/05/25 10:45:10 by ikhelil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,11 @@ int	is_sorted(t_stack *stack)
 	int	i;
 
 	i = 0;
-	if (stack->size <= 1)
-		return (1);
 	while (i < stack->size - 1)
 	{
-		if (stack->data[i + 1] > stack->data[i])
+		if (stack->data[i] > stack->data[i + 1])
 			return (0);
-		i ++;
+		i++;
 	}
 	return (1);
 }

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   algo_small.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikhelil <ikhelil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 17:55:29 by ikhelil           #+#    #+#             */
-/*   Updated: 2025/04/13 13:45:44 by ikhelil          ###   ########.fr       */
+/*   Updated: 2025/05/24 14:57:21 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "stack.h"
+#include "sorting.h"
 
 void	sort_three(t_stack *a)
 {
@@ -46,43 +47,22 @@ void	sort_two(t_stack *a)
 		sa(a);
 }
 
-// on cherche l'index du min
-int	find_min_index(t_stack *stack)
-{
-	int	i;
-	int	min;
-	int	index;
-
-	min = stack->data[0];
-	index = 0;
-	i = 1;
-	while (i < stack->size)
-	{
-		if (stack->data[i] < min)
-		{
-			min = stack->data[i];
-			index = i;
-		}
-		i++;
-	}
-	return (index);
-}
-/* des qu'on trouve le min on le remonte avec des operations
- ra et rra d4 on le push dans b*/
-
 void	push_min_to_b(t_stack *a, t_stack *b)
 {
 	int	index;
+	int	i;
 
 	index = find_min_index(a);
 	if (index <= a->size / 2)
 	{
-		while (index-- > 0)
+		i = index;
+		while (i-- > 0)
 			ra(a);
 	}
 	else
 	{
-		while (index++ < a->size)
+		i = a->size - index;
+		while (i-- > 0)
 			rra(a);
 	}
 	pb(a, b);

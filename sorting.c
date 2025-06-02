@@ -6,97 +6,86 @@
 /*   By: ikhelil <ikhelil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:08:14 by ikhelil           #+#    #+#             */
-/*   Updated: 2025/04/13 13:24:58 by ikhelil          ###   ########.fr       */
+/*   Updated: 2025/05/25 10:44:17 by ikhelil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack.h"
+#include "sorting.h"
 
-static int	in_chunk(int val, int min, int max)
+int	has_chunk(t_stack *a, int min, int max)
 {
-	return (val >= min && val <= max);
+	int	i;
+
+	i = 0;
+	while (i < a->size)
+	{
+		if (a->data[i] >= min && a->data[i] <= max)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
-void	push_chunk_to_b(t_stack *a, t_stack *b, int nb_chunks)
+static void	handle_chunk_push(t_stack *a, t_stack *b, int min, int chunk_size)
 {
-	int	size;
-	int	chunk;
+	pb(a, b);
+	if (b->data[0] < min + chunk_size / 2)
+		rb(b);
+}
+
+static void	update_chunk_bounds(int *min, int *max, int chunk_size, int total)
+{
+	*min = *max + 1;
+	*max = *min + chunk_size - 1;
+	if (*max >= total)
+		*max = total - 1;
+}
+
+void	push_chunks_to_b(t_stack *a, t_stack *b, int nb_chunks)
+{
+	int	chunk_size;
+	int	total;
 	int	min;
 	int	max;
-	int	val;
 
-	size = a->size;
-	chunk = size / nb_chunks;
+	chunk_size = a->size / nb_chunks;
+	if (chunk_size < 1)
+		chunk_size = 1;
+	total = a->size;
 	min = 0;
-	max = chunk - 1;
-	while (a->size)
+	max = chunk_size - 1;
+	while (a->size > 0)
 	{
-		val = a->data[0];
-		if (in_chunk(val, min, max))
+		if (!has_chunk(a, min, max))
 		{
-			pb(a, b);
-			if (val < min + (chunk / 2))
-				rb(b);
-			min++;
-			if (min > max)
-				max += chunk;
+			update_chunk_bounds(&min, &max, chunk_size, total);
+			continue ;
 		}
+		if (a->data[0] >= min && a->data[0] <= max)
+			handle_chunk_push(a, b, min, chunk_size);
 		else
 			ra(a);
 	}
 }
 
-static int	find_max_index(t_stack *b)
+int	find_max_index(t_stack *stack)
 {
 	int	i;
-	int	index;
 	int	max;
+	int	index;
 
-	i = 0;
-	max = b->data[0];
+	max = stack->data[0];
 	index = 0;
-	while (i < b->size)
+	i = 1;
+	while (i < stack->size)
 	{
-		if (b->data[i] > max)
+		if (stack->data[i] > max)
 		{
-			max = b->data[i];
+			max = stack->data[i];
 			index = i;
 		}
 		i++;
 	}
 	return (index);
 }
-
-void	push_back_sorted(t_stack *a, t_stack *b)
-{
-	int	index;
-
-	while (b->size > 0)
-	{
-		index = find_max_index(b);
-		if (index <= b->size / 2)
-		{
-			while (index-- > 0)
-				rb(b);
-		}
-		else
-		{
-			while (index++ < b->size)
-				rrb(b);
-		}
-		pa(a, b);
-	}
-}
-void	sort_big_stack(t_stack *a, t_stack *b)
-{
-	int	nb_chunks;
-
-	if (a->size <= 100)
-		nb_chunks = 5;
-	else
-		nb_chunks = 10;
-	normalize(a);
-	push_chunk_to_b(a, b, nb_chunks);
-	push_back_sorted(a, b);
-}
-
